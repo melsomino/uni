@@ -51,7 +51,7 @@ Quoted string can contain escape sequences:
 
 	description="\t\tText after two tabs:\nAnd new Line"
 
-String can be enclosed in special quotation mark "\`". In this case string can contain any character. You can twice symbol "\`" to include in string:
+String can be enclosed in special quotation mark "\`". In this case string can contain any character. You can twice symbol "\`" to include it in string:
 
 	script=`
 	function f() {
@@ -94,11 +94,30 @@ To comment whole line just start with "#":
 
 # Postprocessing
 
-In addition to base syntax you can use optional powerful postprocessing features: templates and mixins. This features can be applied to module declarations after loading.
+In addition to base syntax you can use optional powerful postprocessing features:
+* Templates
+* Mixins
+* Localization
+* Imports
 
-## Templates
+This features can be applied to module declarations after loading.
 
 ## Mixins
+
+	mixin
+		header color=red font=(Arial 20) margin=(20 0 20 0)
+
+	fragment PersonCell
+		label text={title} +header
+
+Will produce:
+
+	fragment PersonCell
+		label text={title} color=red font=(Arial 20) margin=(20 0 20 0)
+
+## Localization
+
+## Imports
 
 # Libraries
 
@@ -111,8 +130,10 @@ There is implementations for parsing and formatting uni declarations. All implem
 Library implementations:
 * Swift – in development 90%.
 * Java – in development 60%.
+* C# – none.
 * JavaScript – none.
 * Python – none.
+* C++ – none.
 
 # Editor supports
 
