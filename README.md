@@ -6,11 +6,11 @@ Well suited for large range of declarative languages, like config files, schema 
 
 # Terms
 
+*name* – string, containing any number of any characters. Empty string is also valid name.
+
+*value* – string, like name, or ordered list or string.
+
 *attribute* – name with optional value.
-
-*name* – string, containing any number of any characters.
-
-*value* – string, like name, or ordered list or string. Value is optional and can be missed.
 
 *element* – list of attributes and child elements.
 
@@ -22,7 +22,7 @@ Well suited for large range of declarative languages, like config files, schema 
 
 # Base Syntax
 
-Every element starts on new line and contains list of attributes, separated by spaces. Each attribute has name and value, separated by "=":
+The element starts on new line and it includes list of attributes, separated by spaces. Each attribute has name and value, separated by "=":
 
 	firstName=Monica lastName=Thompson
 	firstName=John lastName=Smith
@@ -34,24 +34,24 @@ Attribute value can be omitted:
 	image src=/image.png hidden
 	button title=OK checked default
 
-In case on large number of attributes, theirs declarations can be continued on next line, indented with one tab and started with "~":
+In case of large number of attributes, theirs declarations can be continued on next line, indented with one tab and started with "~":
 
 	label text=Press onClick=onClickPressButton color=red
 		~ enable={isImportant} visible={count>0}
 
-If attribute name or value contains reserved characters, it must be enclosed in quotation marks:
+If attribute name or value contains reserved characters, it must be enclosed in single quotation marks:
 
-	person name="John Smith" job="CEO of \"Laundry Systems\""
+	person name='John Smith' job='CEO of "Laundry Systems"'
 
-Reserved characters are:
+Reserved characters which are can't be used in names and values without quoting:
 
-	" = , ( ) ~ ` #
+	' = , ( ) ~ ` #
 
-Quoted string can contain escape sequences:
+Single quoted string can contain escape sequences:
 
-	description="\t\tText after two tabs:\nAnd new Line"
+	description='\t\tText after two tabs:\nAnd new Line'
 
-String can be enclosed in special quotation mark "\`". In this case string can contain any character. You can twice symbol "\`" to include it in string:
+Alternatively string can be enclosed in back quotation mark "\`". In this case string can contain any character. You can twice symbol "\`" to include it in string:
 
 	script=`
 	function f() {
@@ -59,10 +59,10 @@ String can be enclosed in special quotation mark "\`". In this case string can c
 	}
 	`
 
-Value can be a list of string, enclosed in "(" and ")" and separated with spaces:
+Value can be a list of strings, enclosed in "(" and ")" and separated by spaces:
 
 	button padding=(20 1 20 6)
-	text font=("Times New Roman" 12)
+	text font=('Times New Roman' 12)
 
 ## Children
 
@@ -77,12 +77,12 @@ Children must be indented with one tab relative to its parent:
 
 ## Comments
 
-You can comment rest of line with "#":
+You can comment a rest of line with "#":
 
 	listen port=80 # HTTP
-		rewrite /payments "/payment_service?query_all=true" # Payments Services
+		rewrite /payments '/payment_service?query_all=true' # Payments Services
 
-To comment whole line just start with "#":
+To comment whole line just start it with "#":
 
 	listen port=80
 
@@ -95,12 +95,73 @@ To comment whole line just start with "#":
 # Postprocessing
 
 In addition to base syntax you can use optional powerful postprocessing features:
-* Templates
+* Dictionaries and Substitutions
 * Mixins
 * Localization
 * Imports
 
 This features can be applied to module declarations after loading.
+
+
+## Dictionaries and Substitutions
+
+The postprocessor interprets all root elements as dictionary entries in three ways.
+First declares single entry in single root element:
+
+	color accent orange
+	color success green
+	color error red
+	
+Where *string* and *color* are *types*, *app-name* and *accent* are keys.
+Second form declares multiple same-typed entries in single root element:  
+
+	color success=green warning=orange error=red
+	
+Third form declares multiple same-typed entries in root element with children:
+
+	color
+		accent orange
+		success green
+		error red
+	
+You can mix forms of declaration:
+
+	color
+		accent=orange success=green error=red
+		table-background gray
+	
+
+Each dictionary entry has three parts:
+* type
+* key
+* value
+
+You can use dictionary entries for substitution in attribute names and values.
+The fully qualified substitution must be specified as "^[module:type:key]", where module and type is optional if there is no conflicts with keys:
+
+	string app-name 'Awesome App'
+	color accent orange
+	
+	label title='Welcome to ^[app-name]' color=^accent
+	
+As you see, in *color* attribute used shorthand form of substitution without square brackets. Such form suitable when you substitute whole name or value.
+Note that we omit module and type parts of entry reference because of no key conflicts.
+But if we have entries with same key but different types, we must specify type explicitly:   
+
+	string alert ALERT!
+	color alert red
+
+	label title='We have ^[string:alert]' color=^color:alert
+
+Application can define default entry types for substitution in values of specific attributes.
+For example, layout engine can tell to parser, that substitution entries in *background-color* attribute has default entry type *color*.
+And define default entry type *string* for *title* attributes.
+With this context suggestions you can omit types even in case on duplicated keys:  
+
+	string alert ALERT!
+	color alert red
+
+	label title='We have ^[alert]' color=^alert
 
 ## Mixins
 
@@ -118,6 +179,34 @@ Will produce:
 ## Localization
 
 ## Imports
+
+You can import dictionaries and mixins from other modules.
+
+Module *loc.uni*:
+
+	string localization=en
+		app-name 'App Name'
+
+	string localization=ru
+		app-name 'Приложение'
+
+Module *design.uni*:
+
+	color
+		accent orange
+
+
+Module *main-screen.uni*:
+
+	import loc design
+	
+	fragment main
+	
+		# Fully Qualified Form
+		label title='App: ^[loc:string:app-name]' color=^design:color:accent
+		
+		# Short Form
+		label title='App: ^[app-name]' color=^accent
 
 # Libraries
 

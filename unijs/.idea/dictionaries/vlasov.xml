@@ -3,6 +3,7 @@
     <words>
       <w>backquoted</w>
       <w>singlequoted</w>
+      <w>struct</w>
     </words>
   </dictionary>
 </component>
