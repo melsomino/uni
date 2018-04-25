@@ -2,18 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="370f2510-d18c-4a9f-9001-177f602239f2" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/../unijava/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../unijava/.idea/dictionaries/vlasov.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../unijava/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../unijava/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../unijava/src/org/unified/uni/Attribute.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../unijava/src/org/unified/uni/Char_reader.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../unijava/src/org/unified/uni/Element.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../unijava/src/org/unified/uni/Token.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../unijava/src/org/unified/uni/Token_reader.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../unijava/src/org/unified/uni/Uni.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/vlasov.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/parser.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../unipy/unipy.py" beforeDir="false" afterPath="$PROJECT_DIR$/../unipy/uni.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../unipy/unipy_tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/../unipy/unipy_tests.py" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -26,26 +17,30 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file leaf-file-name="uni.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/uni.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1002">
-              <caret line="224" lean-forward="true" selection-start-line="224" selection-end-line="224" />
+            <state relative-caret-position="3651">
+              <caret line="221" lean-forward="true" selection-start-line="203" selection-end-line="221" />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="parser.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/parser.js">
-          <provider selected="true" editor-type-id="text-editor" />
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="822">
+              <caret line="176" lean-forward="true" selection-start-line="176" selection-end-line="176" />
+            </state>
+          </provider>
         </entry>
       </file>
       <file leaf-file-name="test.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/test.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="140">
-              <caret line="7" selection-start-line="7" selection-end-line="7" />
+            <state relative-caret-position="260">
+              <caret line="13" column="38" lean-forward="true" selection-start-line="13" selection-start-column="38" selection-end-line="13" selection-end-column="38" />
             </state>
           </provider>
         </entry>
@@ -94,7 +89,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -106,6 +100,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -148,11 +143,12 @@
       <option name="presentableId" value="Default" />
       <updated>1522770927713</updated>
       <workItem from="1522770929433" duration="46265000" />
+      <workItem from="1524507148219" duration="4590000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="46265000" />
+    <option name="totallyTimeSpent" value="50855000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="110" y="23" width="1240" height="1163" extended-state="0" />
@@ -162,19 +158,19 @@
       <window_info anchor="bottom" id="TODO" order="10" />
       <window_info anchor="bottom" id="Docker" order="0" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Find" order="5" weight="0.32966024" />
-      <window_info anchor="bottom" id="Run" order="6" weight="0.32966024" />
       <window_info anchor="bottom" id="Version Control" order="1" />
+      <window_info anchor="bottom" id="Run" order="6" weight="0.32966024" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="3" />
-      <window_info anchor="bottom" id="Debug" order="7" weight="0.39944905" />
       <window_info id="Favorites" order="0" side_tool="true" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="bottom" id="Debug" order="7" weight="0.39944905" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="9" weight="0.4" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="bottom" id="Cvs" order="8" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="4" />
+      <window_info anchor="bottom" id="Cvs" order="8" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="5" weight="0.32966024" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -189,12 +185,9 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/parser.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/uni.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1002">
+        <state relative-caret-position="4480">
           <caret line="224" lean-forward="true" selection-start-line="224" selection-end-line="224" />
         </state>
       </provider>
@@ -203,6 +196,27 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="140">
           <caret line="7" selection-start-line="7" selection-end-line="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/parser.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="822">
+          <caret line="176" lean-forward="true" selection-start-line="176" selection-end-line="176" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/uni.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3651">
+          <caret line="221" lean-forward="true" selection-start-line="203" selection-end-line="221" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="260">
+          <caret line="13" column="38" lean-forward="true" selection-start-line="13" selection-start-column="38" selection-end-line="13" selection-end-column="38" />
         </state>
       </provider>
     </entry>
