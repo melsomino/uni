@@ -4,6 +4,87 @@ General purpose language for textual declarative description of hierarchical str
 
 Well suited for large range of declarative languages, like config files, schema definitions etc.
 
+# Examples
+
+Declare something like types:
+
+	Person struct
+		firstName string default=John
+		lasName string default=Smith
+		address struct
+			city string
+			street string
+
+Layouts:
+
+	button title=Press onClick=onClickPressButton color=red margins=(8 4 8 4)
+		~ enabled={isImportant} visible={count>0}
+
+Configs:
+
+	listen port=80
+
+		# Services
+		rewrite /payments/* /payments_services/*
+
+		# Static
+		rewrite /* /content/*
+
+And much more...
+
+#Install
+
+## JavaScript
+
+	npm install unijs
+
+Usage: 
+
+	const uni = require('uni')
+	const elements = uni.parse('element attr=value', { postprocess: true })
+	
+## Java/Android
+
+gradle:
+
+	compile { ... }
+	
+Usage:
+
+	import org.unified.uni.*;
+	
+	Element[] elements = Uni.parse("element attr=value", true);
+
+## Swift/iOS
+
+	pod '...'
+
+Usage:
+
+	import Uni
+	
+	let elements = Uni.parse("element attr=value", postprocess: true)
+
+## c#/.Net
+
+	nuget ...
+	
+Usage:
+
+	import Uni;
+	
+	var elements = Uni.parse("element attr=value", true);
+
+## Python
+	
+	pip3 uni
+	
+Usage:
+
+	import uni;
+	
+	elements: List[uni.Element] = uni.parse('element attr=value', True)
+
 # Terms
 
 *name* – string, containing any number of any characters. Empty string is also valid name.

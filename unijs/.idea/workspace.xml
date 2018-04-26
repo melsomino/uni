@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="370f2510-d18c-4a9f-9001-177f602239f2" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/vlasov.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/vlasov.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -31,8 +29,8 @@
         <entry file="file://$PROJECT_DIR$/../README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="883">
-                <caret line="167" selection-start-line="167" selection-end-line="167" />
+              <first_editor relative-caret-position="964">
+                <caret line="85" selection-start-line="85" selection-end-line="85" />
               </first_editor>
               <second_editor />
             </state>
@@ -161,12 +159,12 @@
       <workItem from="1524669270790" duration="348000" />
       <workItem from="1524669640855" duration="152000" />
       <workItem from="1524669815294" duration="815000" />
-      <workItem from="1524670655095" duration="6039000" />
+      <workItem from="1524670655095" duration="6985000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="59546000" />
+    <option name="totallyTimeSpent" value="60492000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="110" y="23" width="1704" height="1163" extended-state="0" />
@@ -335,8 +333,8 @@
     <entry file="file://$PROJECT_DIR$/../README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="883">
-            <caret line="167" selection-start-line="167" selection-end-line="167" />
+          <first_editor relative-caret-position="964">
+            <caret line="85" selection-start-line="85" selection-end-line="85" />
           </first_editor>
           <second_editor />
         </state>
