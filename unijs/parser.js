@@ -1,13 +1,13 @@
 
 
-function find_string_index_context(string, index) {
+function findStringIndexContext(string, index) {
 	let line = 0
-	let line_start = 0
+	let lineStart = 0
 	let i = 0
 	while (i < string.length) {
 		const c = string[i]
 		if (c === '\r' || c === '\n') {
-			const line_end = i
+			const lineEnd = i
 			i += 1
 			if (i < string.length && c === '\r' || string[i] === '\n') {
 				i += 1
@@ -15,12 +15,12 @@ function find_string_index_context(string, index) {
 			if (i >= index) {
 				return {
 					line: line,
-					line_start: line_start,
-					line_end: line_end,
-					index: Math.min(index, line_end)
+					lineStart: lineStart,
+					lineEnd: lineEnd,
+					index: Math.min(index, lineEnd)
 				}
 			}
-			line_start = i
+			lineStart = i
 			line += 1
 		} else {
 			i += 1
@@ -28,77 +28,77 @@ function find_string_index_context(string, index) {
 	}
 	return {
 		line: line,
-		line_start: line_start,
-		line_end: string.length,
+		lineStart: lineStart,
+		lineEnd: string.length,
 		index: Math.min(index, string.length)
 	}
 }
 
 
-class Char_reader {
+class CharReader {
 	constructor(source) {
 		this.source = source
-		this.next_pos = 0
-		this.current_pos = 0
+		this.nextPos = 0
+		this.currentPos = 0
 		this.length = source.length
-		this.has_current = true
+		this.hasCurrent = true
 		this.tag = false
 		this.current = ''
-		this.passed_start = 0
-		this.passed_end = 0
+		this.passedStart = 0
+		this.passedEnd = 0
 		this.next()
 	}
 
-	context_at(pos) {
-		const context = find_string_index_context(this.source, pos)
-		const line = this.source.substring(context.line_start, context.index) +
-			'👉' + this.source.substring(context.index, context.line_end)
-		return `\r\nline: ${context.line + 1}, col:  ${context.index - context.line_start + 1}\r\nhere: "${line}"`
+	contextAt(pos) {
+		const context = findStringIndexContext(this.source, pos)
+		const line = this.source.substring(context.lineStart, context.index) +
+			'👉' + this.source.substring(context.index, context.lineEnd)
+		return `\r\nline: ${context.line + 1}, col:  ${context.index - context.lineStart + 1}\r\nhere: "${line}"`
 	}
 
-	get current_context() {
-		return this.context_at(this.current_pos)
+	get currentContext() {
+		return this.contextAt(this.currentPos)
 	}
 
 	next() {
-		if (!this.has_current) {
+		if (!this.hasCurrent) {
 			return
 		}
-		if (this.next_pos < this.length) {
-			this.current_pos = this.next_pos
-			this.current = this.source[this.next_pos]
-			this.next_pos += 1
+		if (this.nextPos < this.length) {
+			this.currentPos = this.nextPos
+			this.current = this.source[this.nextPos]
+			this.nextPos += 1
 		} else {
-			this.has_current = false
+			this.hasCurrent = false
 			this.current = ''
-			this.current_pos = this.length
+			this.currentPos = this.length
 		}
 	}
 
-	pass_char(test) {
-		if (this.has_current && this.current === test) {
+	passChar(test) {
+		if (this.hasCurrent && this.current === test) {
 			this.next()
 			return true
 		}
 		return false
 	}
 
-	pass_while(test) {
-		const start_pos = this.current_pos
-		while (this.has_current && test(this.current)) {
+	passWhile(test) {
+		const startPos = this.currentPos
+		while (this.hasCurrent && test(this.current)) {
 			this.next()
 		}
-		const end_pos = this.current_pos
-		if (end_pos === start_pos) {
+		const endPos = this.currentPos
+		if (endPos === startPos) {
 			return false
 		}
-		this.passed_start = start_pos
-		this.passed_end = end_pos
+		this.passedStart = startPos
+		this.passedEnd = endPos
 		return true
 	}
 
 	get passed() {
-		return this.source.substring(this.passed_start, this.passed_end)
+		return this.source.substring(this.passedStart, this.passedEnd)
 	}
 }
 
@@ -115,7 +115,7 @@ class Token {
 		return new Token(type, null)
 	}
 
-	with(value) {
+	withValue(value) {
 		return new Token(this.type, value)
 	}
 
@@ -126,25 +126,25 @@ class Token {
 }
 
 
-class Token_reader {
+class TokenReader {
 	constructor(source, tokenizer) {
-		this.input = new Char_reader(source)
-		this.has_current = true
+		this.input = new CharReader(source)
+		this.hasCurrent = true
 		this.passed = null
-		this.current_pos = this.input.current_pos
+		this.currentPos = this.input.currentPos
 		this.current = null
 		this.tokenizer = tokenizer
 		this.next()
 	}
 
 
-	get current_context() {
-		return this.input.context_at(this.current_pos)
+	get currentContext() {
+		return this.input.contextAt(this.currentPos)
 	}
 
 
-	pass(token) {
-		if (!this.has_current || this.current.type !== token.type) {
+	passToken(token) {
+		if (!this.hasCurrent || this.current.type !== token.type) {
 			return false
 		}
 		this.passed = this.current
@@ -153,28 +153,28 @@ class Token_reader {
 	}
 
 
-	pass_required(token) {
-		if (!this.pass(token)) {
-			throw `Expected ${Token.names[token.type]} at: ${this.current_context}`
+	passRequired(token) {
+		if (!this.passToken(token)) {
+			throw `Expected ${Token.names[token.type]} at: ${this.currentContext}`
 		}
 	}
 
 
 	next() {
-		if (!this.has_current) {
+		if (!this.hasCurrent) {
 			return
 		}
-		if (!this.input.has_current) {
+		if (!this.input.hasCurrent) {
 			this.current = null
-			this.has_current = false
+			this.hasCurrent = false
 			return
 		}
-		this.current_pos = this.input.current_pos
+		this.currentPos = this.input.currentPos
 		this.current = this.tokenizer(this.input)
 		if (this.current === null) {
-			this.has_current = false
-			if (this.input.has_current) {
-				throw `Error at ${this.current_context}`
+			this.hasCurrent = false
+			if (this.input.hasCurrent) {
+				throw `Error at ${this.currentContext}`
 			}
 		}
 	}
@@ -183,4 +183,4 @@ class Token_reader {
 Token.names = ['']
 
 module.exports.Token = Token
-module.exports.Token_reader = Token_reader
+module.exports.TokenReader = TokenReader

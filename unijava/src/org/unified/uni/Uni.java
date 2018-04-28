@@ -48,7 +48,7 @@ public class Uni {
 	}
 
 
-	static Token parse_backquoted_string(Char_reader input) throws Token_reader.Error {
+	static Token parse_backquoted_string(CharReader input) throws Token_reader.Error {
 		StringBuilder string = new StringBuilder();
 		int start_pos = input.current_pos;
 		while (input.has_current) {
@@ -79,7 +79,7 @@ public class Uni {
 	static String hex_chars = "0123456789ABCDEFabcdef";
 
 
-	static char expect_char_from_code_point(Char_reader input, int digits) throws Token_reader.Error {
+	static char expect_char_from_code_point(CharReader input, int digits) throws Token_reader.Error {
 		StringBuilder hex = new StringBuilder();
 		while (digits > 0) {
 			if (!input.has_current || hex_chars.indexOf(input.current) < 0) {
@@ -93,7 +93,7 @@ public class Uni {
 	}
 
 
-	static Token parse_singlequoted_string(Char_reader input) throws Token_reader.Error {
+	static Token parse_singlequoted_string(CharReader input) throws Token_reader.Error {
 		StringBuilder string = new StringBuilder();
 		int start_pos = input.current_pos;
 		while (input.has_current) {
@@ -124,7 +124,7 @@ public class Uni {
 	}
 
 
-	static boolean pass_line_end(Char_reader input) {
+	static boolean pass_line_end(CharReader input) {
 		if (input.current == '#') {
 			input.pass_while(Uni::is_not_cr_or_lf);
 		}
@@ -139,7 +139,7 @@ public class Uni {
 	}
 
 
-	static Token parse_indentation(Char_reader input) {
+	static Token parse_indentation(CharReader input) {
 		while (input.tag == null || pass_line_end(input)) {
 			input.tag = true;
 			int start = input.next_pos;
@@ -156,7 +156,7 @@ public class Uni {
 	}
 
 
-	static Token tokenize(Char_reader input) throws Token_reader.Error {
+	static Token tokenize(CharReader input) throws Token_reader.Error {
 		Token token = parse_indentation(input);
 		if (token != null) {
 			return token;

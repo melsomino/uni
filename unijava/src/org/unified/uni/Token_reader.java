@@ -26,13 +26,13 @@ public class Token_reader {
 
 
 	public interface Tokenizer {
-		Token apply(Char_reader input) throws Error;
+		Token apply(CharReader input) throws Error;
 	}
 
 
 	public Token_reader(String source, Tokenizer tokenizer) throws Error {
 		this.tokenizer = tokenizer;
-		input = new Char_reader(source);
+		input = new CharReader(source);
 		has_current = true;
 		passed = null;
 		current_pos = input.current_pos;
@@ -83,7 +83,7 @@ public class Token_reader {
 	}
 
 
-	private final Char_reader input;
+	private final CharReader input;
 	boolean has_current;
 	Token passed;
 	private int current_pos;

@@ -7,13 +7,13 @@ package org.unified.uni;
  * <p>
  * Copyright (c) 2017 Michael Vlasov
  */
-public class Char_reader {
+public class CharReader {
 	public interface Test {
 		boolean apply(char c);
 	}
 
 
-	public Char_reader(String source) {
+	public CharReader(String source) {
 		this.source = source;
 		next_pos = 0;
 		current_pos = 0;

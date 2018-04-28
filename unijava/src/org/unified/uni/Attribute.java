@@ -58,10 +58,11 @@ public final class Attribute {
 	public static void append_attributes(Attribute[] attributes, StringBuilder builder) {
 		boolean is_first = true;
 		for (Attribute attribute : attributes) {
-			if (!is_first) {
+			if (is_first) {
+				is_first = false;
+			} else {
 				builder.append(' ');
 			}
-			is_first = false;
 			attribute.append(builder);
 		}
 	}

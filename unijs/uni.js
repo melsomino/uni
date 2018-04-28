@@ -1,59 +1,59 @@
 const parser = require('./parser')
 const Token = parser.Token
 
-name_or_value_token = Token.register('name or value')
-name_value_separator_token = Token.register('=')
-attribute_continuation_token = Token.register('~')
-indentation_token = Token.register('⇥')
-open_list_token = Token.register('(')
-close_list_token = Token.register(')')
+nameOrValueToken = Token.register('name or value')
+nameValueSeparatorToken = Token.register('=')
+attributeContinuationToken = Token.register('~')
+indentationToken = Token.register('⇥')
+openListToken = Token.register('(')
+closeListToken = Token.register(')')
 
 
-function is_not_cr_or_lf(c) {
+function isNotCrOrLf(c) {
 	return c !== '\r' && c !== '\n'
 }
 
 
-function is_tab(c) {
+function isTab(c) {
 	return c === '\t'
 }
 
 
-function is_not_reserved(c) {
+function isNotReserved(c) {
 	return !" \t\r\n()='`~#".includes(c)
 }
 
 
-function is_whitespace(c) {
+function isWhitespace(c) {
 	return (c === ' ') || (c === '\t')
 }
 
 
-function parse_backquoted_string(input) {
+function parseBackQuotedString(input) {
 	let string = ''
-	const start_pos = input.current_pos
-	while (input.has_current) {
-		input.pass_while((c) => c !== '`')
+	const startPos = input.currentPos
+	while (input.hasCurrent) {
+		input.passWhile((c) => c !== '`')
 		string += input.passed
-		if (!input.pass_char('`')) {
-			throw `Unterminated backquoted string at ${input.context_at(start_pos)}`
+		if (!input.passChar('`')) {
+			throw `Unterminated backquoted string at ${input.contextAt(startPos)}`
 		}
-		if (!input.pass_char('`')) {
+		if (!input.passChar('`')) {
 			break
 		}
 		string += '`'
 	}
-	return name_or_value_token.with(string)
+	return nameOrValueToken.withValue(string)
 }
 
-const escaped_by_char = { '0': '\0', '\'': '\'', '\\': '\\', 'n': '\n', 'r': '\r', 'v': '\v', 't': '\t', 'b': '\b', 'f': '\f' }
-const hex_chars = '0123456789ABCDEFabcdef'
+const escapedByChar = { '0': '\0', '\'': '\'', '\\': '\\', 'n': '\n', 'r': '\r', 'v': '\v', 't': '\t', 'b': '\b', 'f': '\f' }
+const hexChars = '0123456789ABCDEFabcdef'
 
-function expect_char_from_code_point(input, digits) {
+function expectCharFromCodePoint(input, digits) {
 	let hex = ''
 	while (digits > 0) {
-		if (!input.has_current || !hex_chars.includes(input.current)) {
-			throw `Invalid hex code string at ${input.context_at(input.current_pos)}`
+		if (!input.hasCurrent || !hexChars.includes(input.current)) {
+			throw `Invalid hex code string at ${input.contextAt(input.currentPos)}`
 		}
 		hex += input.current
 		input.next()
@@ -62,62 +62,62 @@ function expect_char_from_code_point(input, digits) {
 	return String.fromCodePoint(Number.parseInt(hex, 16))
 }
 
-function parse_singlequoted_string(input) {
+function parseSingleQuotedString(input) {
 	let string = ''
-	const start_pos = input.current_pos;
-	while (input.has_current) {
-		if (input.pass_char('\'')) {
-			return name_or_value_token.with(string)
+	const startPos = input.currentPos;
+	while (input.hasCurrent) {
+		if (input.passChar('\'')) {
+			return nameOrValueToken.withValue(string)
 		}
-		if (input.pass_char('\\')) {
-			if(!input.has_current) {
+		if (input.passChar('\\')) {
+			if(!input.hasCurrent) {
 				break
 			}
-			if (input.current in escaped_by_char) {
-				string += escaped_by_char[input.current]
+			if (input.current in escapedByChar) {
+				string += escapedByChar[input.current]
 				input.next()
-			} else if (input.pass_char('x')) {
-				string += expect_char_from_code_point(input, 2)
-			} else if (input.pass_char('u')) {
-				string += expect_char_from_code_point(input, 4)
+			} else if (input.passChar('x')) {
+				string += expectCharFromCodePoint(input, 2)
+			} else if (input.passChar('u')) {
+				string += expectCharFromCodePoint(input, 4)
 			} else {
-				throw `Invalid escape sequence at ${input.current_context}`
+				throw `Invalid escape sequence at ${input.currentContext}`
 			}
 		} else {
 			string += input.current
 			input.next()
 		}
 	}
-	throw `Unterminated backquoted string at ${input.context_at(start_pos)}`
+	throw `Unterminated backquoted string at ${input.contextAt(startPos)}`
 }
 
 
-function pass_line_end(input) {
+function passLineEnd(input) {
 	if (input.current === '#') {
-		input.pass_while(is_not_cr_or_lf)
+		input.passWhile(isNotCrOrLf)
 	}
-	if (input.pass_char('\r')) {
-		input.pass_char('\n')
+	if (input.passChar('\r')) {
+		input.passChar('\n')
 		return true
 	}
-	if (input.pass_char('\n')) {
+	if (input.passChar('\n')) {
 		return true
 	}
 	return false
 }
 
 
-function parse_indentation(input) {
-	while (!input.tag || pass_line_end(input)) {
+function parseIndentation(input) {
+	while (!input.tag || passLineEnd(input)) {
 		input.tag = true
-		const start = input.next_pos
-		input.pass_while(is_tab)
-		if (!input.has_current) {
+		const start = input.nextPos
+		input.passWhile(isTab)
+		if (!input.hasCurrent) {
 			return null
 		}
-		input.pass_while(is_whitespace)
+		input.passWhile(isWhitespace)
 		if (input.current !== '\r' && input.current !== '\n' && input.current !== '#') {
-			return indentation_token.with(input.next_pos - start)
+			return indentationToken.withValue(input.nextPos - start)
 		}
 	}
 	return null
@@ -125,48 +125,48 @@ function parse_indentation(input) {
 
 
 function tokenize(input) {
-	let token = parse_indentation(input)
+	let token = parseIndentation(input)
 	if (token != null) {
 		return token
 	}
-	if (!input.has_current) {
+	if (!input.hasCurrent) {
 		return null
 	}
-	if (input.pass_char('=')) {
-		token = name_value_separator_token
-	} else if (input.pass_char('~')) {
-		token = attribute_continuation_token
-	} else if (input.pass_char('(')) {
-		token = open_list_token
-	} else if (input.pass_char(')')) {
-		token = close_list_token
-	} else if (input.pass_char("'")) {
-		token = parse_singlequoted_string(input)
-	} else if (input.pass_char("`")) {
-		token = parse_backquoted_string(input)
-	} else if (input.pass_while(is_not_reserved)) {
-		token = name_or_value_token.with(input.passed)
+	if (input.passChar('=')) {
+		token = nameValueSeparatorToken
+	} else if (input.passChar('~')) {
+		token = attributeContinuationToken
+	} else if (input.passChar('(')) {
+		token = openListToken
+	} else if (input.passChar(')')) {
+		token = closeListToken
+	} else if (input.passChar("'")) {
+		token = parseSingleQuotedString(input)
+	} else if (input.passChar("`")) {
+		token = parseBackQuotedString(input)
+	} else if (input.passWhile(isNotReserved)) {
+		token = nameOrValueToken.withValue(input.passed)
 	} else {
 		return null
 	}
-	input.pass_while(is_whitespace)
+	input.passWhile(isWhitespace)
 	return token
 }
 
 
-function parse_attributes(reader, attributes) {
-	while (reader.pass(name_or_value_token)) {
+function parseAttributes(reader, attributes) {
+	while (reader.pass(nameOrValueToken)) {
 		const name = reader.passed.value
 		let value = null
-		if (reader.pass(name_value_separator_token)) {
-			if (reader.pass(open_list_token)) {
+		if (reader.pass(nameValueSeparatorToken)) {
+			if (reader.pass(openListToken)) {
 				value = []
-				while (reader.pass(name_or_value_token)) {
+				while (reader.pass(nameOrValueToken)) {
 					value.push(reader.passed.value)
 				}
-				reader.pass_required(close_list_token)
+				reader.passRequired(closeListToken)
 			} else {
-				reader.pass_required(name_or_value_token)
+				reader.passRequired(nameOrValueToken)
 				value = reader.passed.value
 			}
 		}
@@ -175,9 +175,9 @@ function parse_attributes(reader, attributes) {
 }
 
 
-function pass_indentation(reader, expected_indentation) {
-	if (reader.has_current && reader.current.type === indentation_token.type &&
-		reader.current.value === expected_indentation) {
+function passIndentation(reader, expectedIndentation) {
+	if (reader.hasCurrent && reader.current.type === indentationToken.type &&
+		reader.current.value === expectedIndentation) {
 		reader.next()
 		return true
 	}
@@ -185,15 +185,15 @@ function pass_indentation(reader, expected_indentation) {
 }
 
 
-function parse_element(reader, elements, indentation) {
+function parseElement(reader, elements, indentation) {
 	const attributes = []
 	const children = []
-	parse_attributes(reader, attributes)
-	while (pass_indentation(reader, indentation + 1)) {
-		if (reader.pass(attribute_continuation_token)) {
-			parse_attributes(reader, attributes)
+	parseAttributes(reader, attributes)
+	while (passIndentation(reader, indentation + 1)) {
+		if (reader.pass(attributeContinuationToken)) {
+			parseAttributes(reader, attributes)
 		} else {
-			parse_elements(reader, children, indentation + 1)
+			parseElements(reader, children, indentation + 1)
 			break
 		}
 	}
@@ -201,21 +201,21 @@ function parse_element(reader, elements, indentation) {
 }
 
 
-function parse_elements(reader, elements, indentation) {
+function parseElements(reader, elements, indentation) {
 	do {
-		parse_element(reader, elements, indentation)
-	} while (pass_indentation(reader, indentation))
+		parseElement(reader, elements, indentation)
+	} while (passIndentation(reader, indentation))
 }
 
 
 function parse(source) {
-	const reader = new parser.Token_reader(source, tokenize)
+	const reader = new parser.TokenReader(source, tokenize)
 	const elements = []
-	if (reader.pass(indentation_token) && reader.passed.value === 0) {
-		parse_elements(reader, elements, 0)
+	if (reader.pass(indentationToken) && reader.passed.value === 0) {
+		parseElements(reader, elements, 0)
 	}
-	if (reader.has_current) {
-		throw `Unexpected "${reader.current.toString()}" at ${reader.current_context}`
+	if (reader.hasCurrent) {
+		throw `Unexpected "${reader.current.toString()}" at ${reader.currentContext}`
 	}
 	return elements
 }
