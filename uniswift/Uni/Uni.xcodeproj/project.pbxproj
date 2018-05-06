@@ -7,13 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B70AFCAE2094DF0E0066E7A0 /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70AFCAD2094DF0E0066E7A0 /* Token.swift */; };
-		B70AFCB02094E44C0066E7A0 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70AFCAF2094E44C0066E7A0 /* Parser.swift */; };
+		B70AFCAE2094DF0E0066E7A0 /* LexicalToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70AFCAD2094DF0E0066E7A0 /* LexicalToken.swift */; };
+		B7B214F6209E4028000CB049 /* DeclarationElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7B214F5209E4028000CB049 /* DeclarationElement.swift */; };
+		B7B214FA209E4120000CB049 /* TokenReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7B214F9209E4120000CB049 /* TokenReader.swift */; };
 		B7CC6270209246F200C0FED8 /* Uni.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7CC6266209246F200C0FED8 /* Uni.framework */; };
 		B7CC6275209246F200C0FED8 /* UniTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7CC6274209246F200C0FED8 /* UniTests.swift */; };
 		B7CC6277209246F200C0FED8 /* Uni.h in Headers */ = {isa = PBXBuildFile; fileRef = B7CC6269209246F200C0FED8 /* Uni.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B7CC62812092471100C0FED8 /* CharReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7CC62802092471100C0FED8 /* CharReader.swift */; };
-		B7CC62832093709C00C0FED8 /* Elements.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7CC62822093709C00C0FED8 /* Elements.swift */; };
+		B7CC62832093709C00C0FED8 /* DeclarationAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7CC62822093709C00C0FED8 /* DeclarationAttribute.swift */; };
+		B7F10608209F4A70002022B5 /* DeclarationParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F10607209F4A70002022B5 /* DeclarationParser.swift */; };
+		B7F1060A209F4AC8002022B5 /* String+Declaration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F10609209F4AC8002022B5 /* String+Declaration.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,8 +30,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		B70AFCAD2094DF0E0066E7A0 /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
-		B70AFCAF2094E44C0066E7A0 /* Parser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
+		B70AFCAD2094DF0E0066E7A0 /* LexicalToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LexicalToken.swift; sourceTree = "<group>"; };
+		B7B214F5209E4028000CB049 /* DeclarationElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeclarationElement.swift; sourceTree = "<group>"; };
+		B7B214F9209E4120000CB049 /* TokenReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenReader.swift; sourceTree = "<group>"; };
 		B7CC6266209246F200C0FED8 /* Uni.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Uni.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7CC6269209246F200C0FED8 /* Uni.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Uni.h; sourceTree = "<group>"; };
 		B7CC626A209246F200C0FED8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -36,7 +40,9 @@
 		B7CC6274209246F200C0FED8 /* UniTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniTests.swift; sourceTree = "<group>"; };
 		B7CC6276209246F200C0FED8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B7CC62802092471100C0FED8 /* CharReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharReader.swift; sourceTree = "<group>"; };
-		B7CC62822093709C00C0FED8 /* Elements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Elements.swift; sourceTree = "<group>"; };
+		B7CC62822093709C00C0FED8 /* DeclarationAttribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeclarationAttribute.swift; sourceTree = "<group>"; };
+		B7F10607209F4A70002022B5 /* DeclarationParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeclarationParser.swift; sourceTree = "<group>"; };
+		B7F10609209F4AC8002022B5 /* String+Declaration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Declaration.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +64,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B7B214F7209E40B2000CB049 /* Lexer */ = {
+			isa = PBXGroup;
+			children = (
+				B70AFCAD2094DF0E0066E7A0 /* LexicalToken.swift */,
+				B7CC62802092471100C0FED8 /* CharReader.swift */,
+				B7B214F9209E4120000CB049 /* TokenReader.swift */,
+			);
+			path = Lexer;
+			sourceTree = "<group>";
+		};
+		B7B214F8209E40E6000CB049 /* Declaration */ = {
+			isa = PBXGroup;
+			children = (
+				B7CC62822093709C00C0FED8 /* DeclarationAttribute.swift */,
+				B7B214F5209E4028000CB049 /* DeclarationElement.swift */,
+				B7F10607209F4A70002022B5 /* DeclarationParser.swift */,
+				B7F10609209F4AC8002022B5 /* String+Declaration.swift */,
+			);
+			path = Declaration;
+			sourceTree = "<group>";
+		};
 		B7CC625C209246F100C0FED8 = {
 			isa = PBXGroup;
 			children = (
@@ -79,12 +106,10 @@
 		B7CC6268209246F200C0FED8 /* Uni */ = {
 			isa = PBXGroup;
 			children = (
+				B7B214F8209E40E6000CB049 /* Declaration */,
+				B7B214F7209E40B2000CB049 /* Lexer */,
 				B7CC6269209246F200C0FED8 /* Uni.h */,
 				B7CC626A209246F200C0FED8 /* Info.plist */,
-				B7CC62802092471100C0FED8 /* CharReader.swift */,
-				B7CC62822093709C00C0FED8 /* Elements.swift */,
-				B70AFCAD2094DF0E0066E7A0 /* Token.swift */,
-				B70AFCAF2094E44C0066E7A0 /* Parser.swift */,
 			);
 			path = Uni;
 			sourceTree = "<group>";
@@ -209,10 +234,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B70AFCB02094E44C0066E7A0 /* Parser.swift in Sources */,
-				B70AFCAE2094DF0E0066E7A0 /* Token.swift in Sources */,
+				B7B214F6209E4028000CB049 /* DeclarationElement.swift in Sources */,
+				B7B214FA209E4120000CB049 /* TokenReader.swift in Sources */,
+				B70AFCAE2094DF0E0066E7A0 /* LexicalToken.swift in Sources */,
 				B7CC62812092471100C0FED8 /* CharReader.swift in Sources */,
-				B7CC62832093709C00C0FED8 /* Elements.swift in Sources */,
+				B7CC62832093709C00C0FED8 /* DeclarationAttribute.swift in Sources */,
+				B7F1060A209F4AC8002022B5 /* String+Declaration.swift in Sources */,
+				B7F10608209F4A70002022B5 /* DeclarationParser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

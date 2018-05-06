@@ -11,17 +11,25 @@ import XCTest
 
 class UniTests: XCTestCase {
 
-	override func setUp() {
-		super.setUp()
-		// Put setup code here. This method is called before the invocation of each test method in the class.
+	private func test(source: String, expected: String? = nil) {
+		do {
+			let elements = try DeclarationParser.parse(string: source)
+			let actual = String(declaration: elements).trimmingCharacters(in: .newlines)
+			XCTAssertEqual(expected ?? source, actual)
+		} catch {
+			XCTFail(String(describing: error))
+		}
 	}
 	
-	override func tearDown() {
-		// Put teardown code here. This method is called after the invocation of each test method in the class.
-		super.tearDown()
-	}
-
-	func testUnicodeScalarsPerformance() {
-	}
 	
+	func testDeclarationParser() throws {
+		test(source: "element a=A  b=B\tc=C", expected: "element a=A b=B c=C")
+		test(source: "a")
+		test(source: "a=A b c=(1 2 3)")
+		test(source: "a=A\r\n\tb=B")
+		test(source: "a=A\r\n\t~ b=B\r\n\tc=C\r\nd=D", expected: "a=A b=B\r\n\tc=C\r\nd=D")
+		test(source: "a='A\\r\\n\\t\\\\B'", expected: "a=`A\r\n\t\\B`")
+		test(source: "'\\x09\\u0009'", expected: "`\t\t`")
+		test(source: "`\t\r\n`")
+	}
 }
